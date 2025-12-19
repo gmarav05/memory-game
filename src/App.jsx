@@ -5,7 +5,7 @@ import MemoryCard from './components/MemoryCard'
 export default function App() {
     const [isGameOn, setIsGameOn] = useState(false)
     const [emojisData, setEmojisData] = useState([])
-     
+
     async function startGame(e) {
         e.preventDefault()
         
@@ -17,13 +17,55 @@ export default function App() {
             }
             
             const data = await response.json()
-            const dataSample = data.slice(0,5)
+            const dataSlice = getDataSlice(data)
+            const emojisArray = getEmojisArray(dataSlice)
             
-            setEmojisData(dataSample)
+            setEmojisData(emojisArray)
             setIsGameOn(true)
         } catch(err) {
             console.error(err)
         }   
+    }
+    
+    function getDataSlice(data) {
+        const randomIndices = getRandomIndices(data)
+        
+        const dataSlice = randomIndices.reduce((array, index) => {
+            array.push(data[index])
+            return array
+        }, [])
+        
+        return dataSlice
+    }
+    
+    function getRandomIndices(data) {
+        const randomIndicesArray = []
+        
+        for (let i = 0; i < 5; i++) {
+            const randomNum = Math.floor(Math.random() * data.length)
+            if (!randomIndicesArray.includes(randomNum)) {
+                randomIndicesArray.push(randomNum)
+            } else {
+                i--
+            }
+        }
+        
+        return randomIndicesArray
+    }
+    
+    function getEmojisArray(data) {
+        const pairedEmojisArray = [...data, ...data]
+        
+        for (let i =pairedEmojisArray.length -1; i>0; i--) {
+            let j =  Math.floor(Math.random() * (i+1));
+            let k = pairedEmojisArray[i]
+            pairedEmojisArray[i] = pairedEmojisArray[j]
+            pairedEmojisArray[j] = k
+        }
+        
+        
+        return pairedEmojisArray;
+
     }
     
     function turnCard() {
