@@ -5,6 +5,8 @@ import MemoryCard from './components/MemoryCard'
 export default function App() {
     const [isGameOn, setIsGameOn] = useState(false)
     const [emojisData, setEmojisData] = useState([])
+    const [selectedCards, setSelectedCards] = useState([])
+    
 
     async function startGame(e) {
         e.preventDefault()
@@ -66,8 +68,13 @@ export default function App() {
         return pairedEmojisArray
     }
     
+    console.log(selectedCards)
     function turnCard(name, index) {
         console.log(`The emoji ${name} at index ${index} was clicked!`)
+        setSelectedCards([{
+            name,
+            index,
+        }])
     }
     
     return (
