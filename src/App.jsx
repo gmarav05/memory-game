@@ -17,8 +17,8 @@ export default function App() {
             }
             
             const data = await response.json()
-            const dataSlice = getDataSlice(data)
-            const emojisArray = getEmojisArray(dataSlice)
+            const dataSlice = await getDataSlice(data)
+            const emojisArray = await getEmojisArray(dataSlice)
             
             setEmojisData(emojisArray)
             setIsGameOn(true)
@@ -26,21 +26,21 @@ export default function App() {
             console.error(err)
         }   
     }
-    
-    function getDataSlice(data) {
+
+    async function getDataSlice(data) {
         const randomIndices = getRandomIndices(data)
-        
+
         const dataSlice = randomIndices.reduce((array, index) => {
             array.push(data[index])
             return array
         }, [])
-        
+
         return dataSlice
     }
     
-    function getRandomIndices(data) {
+    function getRandomIndices(data) {        
         const randomIndicesArray = []
-        
+
         for (let i = 0; i < 5; i++) {
             const randomNum = Math.floor(Math.random() * data.length)
             if (!randomIndicesArray.includes(randomNum)) {
@@ -52,24 +52,22 @@ export default function App() {
         
         return randomIndicesArray
     }
-    
-    function getEmojisArray(data) {
+
+    async function getEmojisArray(data) {
         const pairedEmojisArray = [...data, ...data]
         
-        for (let i =pairedEmojisArray.length -1; i>0; i--) {
-            let j =  Math.floor(Math.random() * (i+1));
-            let k = pairedEmojisArray[i]
+        for (let i = pairedEmojisArray.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1))
+            const temp = pairedEmojisArray[i]
             pairedEmojisArray[i] = pairedEmojisArray[j]
-            pairedEmojisArray[j] = k
+            pairedEmojisArray[j] = temp
         }
         
-        
-        return pairedEmojisArray;
-
+        return pairedEmojisArray
     }
     
-    function turnCard() {
-        console.log("Memory card clicked")
+    function turnCard(name, index) {
+        console.log(`The emoji ${name} at index ${index} was clicked!`)
     }
     
     return (
