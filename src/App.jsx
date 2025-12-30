@@ -7,7 +7,7 @@ export default function App() {
     const [emojisData, setEmojisData] = useState([])
     const [selectedCards, setSelectedCards] = useState([])
     const [matchedCards, setMatchedCards] = useState([])
-    const [isGameOver, setIsGameOver] = useState(false)
+    const [areAllCardsMatched, setAreAllCardsMatched] = useState(false)
     
     useEffect(() => {
         if (selectedCards.length === 2 && selectedCards[0].name === selectedCards[1].name) {
@@ -17,7 +17,7 @@ export default function App() {
     
     useEffect(() => {
         if (emojisData.length && matchedCards.length === emojisData.length) {
-            setIsGameOver(true)
+            setAreAllCardsMatched(true)
         }
     }, [matchedCards])
     
@@ -82,11 +82,9 @@ export default function App() {
     }
     
     function turnCard(name, index) {
-        const selectedCardEntry = selectedCards.find(emoji => emoji.index === index)
-        
-        if (!selectedCardEntry && selectedCards.length < 2) {
+        if (selectedCards.length < 2) {
             setSelectedCards(prevSelectedCards => [...prevSelectedCards, { name, index }])
-        } else if (!selectedCardEntry && selectedCards.length === 2) {
+        } else if (selectedCards.length === 2) {
             setSelectedCards([{ name, index }])
         }
     }
