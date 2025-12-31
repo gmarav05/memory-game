@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
-import Form from '/components/Form'
-import MemoryCard from '/components/MemoryCard'
-import AssistiveTechInfo from '/components/AssistiveTechInfo'
+import Form from './components/Form'
+import MemoryCard from './components/MemoryCard'
+import AssistiveTechInfo from './components/AssistiveTechInfo'
+import GameOver from './components/GameOver'
 
 export default function App() {
     const [isGameOn, setIsGameOn] = useState(false)
@@ -9,7 +10,7 @@ export default function App() {
     const [selectedCards, setSelectedCards] = useState([])
     const [matchedCards, setMatchedCards] = useState([])
     const [areAllCardsMatched, setAreAllCardsMatched] = useState(false)
-
+    
     useEffect(() => {
         if (selectedCards.length === 2 && selectedCards[0].name === selectedCards[1].name) {
             setMatchedCards(prevMatchedCards => [...prevMatchedCards, ...selectedCards])
@@ -95,11 +96,8 @@ export default function App() {
             <h1>Memory</h1>
             {!isGameOn && <Form handleSubmit={startGame} />}
             {isGameOn && !areAllCardsMatched &&
-                <AssistiveTechInfo
-                    emojisData={emojisData}
-                    matchedCards={matchedCards}
-                />
-            }
+                <AssistiveTechInfo emojisData={emojisData} matchedCards={matchedCards} />}
+            {areAllCardsMatched && <GameOver />}
             {isGameOn &&
                 <MemoryCard
                     handleClick={turnCard}
