@@ -91,13 +91,20 @@ export default function App() {
         }
     }
     
+    function resetGame() {
+        setIsGameOn(false)
+        setSelectedCards([])
+        setMatchedCards([])
+        setAreAllCardsMatched(false)
+    }
+    
     return (
         <main>
             <h1>Memory</h1>
             {!isGameOn && <Form handleSubmit={startGame} />}
             {isGameOn && !areAllCardsMatched &&
                 <AssistiveTechInfo emojisData={emojisData} matchedCards={matchedCards} />}
-            {areAllCardsMatched && <GameOver />}
+            {areAllCardsMatched && <GameOver handleClick={resetGame} />}
             {isGameOn &&
                 <MemoryCard
                     handleClick={turnCard}
