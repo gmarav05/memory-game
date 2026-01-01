@@ -6,13 +6,16 @@ import GameOver from './components/GameOver'
 import ErrorCard from './components/ErrorCard'
 
 export default function App() {
+    const initialFormData = {category: "animals-and-nature", number: 10}
+    
+    const [formData, setFormData] = useState(initialFormData)
     const [isGameOn, setIsGameOn] = useState(false)
     const [emojisData, setEmojisData] = useState([])
     const [selectedCards, setSelectedCards] = useState([])
     const [matchedCards, setMatchedCards] = useState([])
     const [areAllCardsMatched, setAreAllCardsMatched] = useState(false)
     const [isError, setIsError] = useState(false)
-        
+    
     useEffect(() => {
         if (selectedCards.length === 2 && selectedCards[0].name === selectedCards[1].name) {
             setMatchedCards(prevMatchedCards => [...prevMatchedCards, ...selectedCards])
@@ -25,13 +28,15 @@ export default function App() {
         }
     }, [matchedCards])
     
+    function handleFormChange(e) {
+        setFormData(prevFormData => ({...prevFormData, [e.target.name]: e.target.value}))
+    }
+    
     async function startGame(e) {
         e.preventDefault()
         
         try {
-            // throw new Error("I am now throwing a brand new error.")
-            
-            const response = await fetch("https://emojihub.yurace.pro/api/all/category/animals-and-nature")
+            const response = await fetch(`https://emojihub.yurace.pro/api/all/category/${formData.category}`)
             
             if (!response.ok) {
                 throw new Error("Could not fetch data from API")
@@ -63,7 +68,7 @@ export default function App() {
     function getRandomIndices(data) {        
         const randomIndicesArray = []
  
-        for (let i = 0; i < 5; i++) {
+        for (let i = 0; i < (formData.number / 2); i++) {
             const randomNum = Math.floor(Math.random() * data.length)
             if (!randomIndicesArray.includes(randomNum)) {
                 randomIndicesArray.push(randomNum)
@@ -110,7 +115,9 @@ export default function App() {
     return (
         <main>
             <h1>Memory</h1>
-            {!isGameOn && !isError && <Form handleSubmit={startGame} />}
+            {!isGameOn && !isError &&
+                <Form handleSubmit={startGame} handleChange={handleFormChange} />
+            }
             {isGameOn && !areAllCardsMatched &&
                 <AssistiveTechInfo emojisData={emojisData} matchedCards={matchedCards} />}
             {areAllCardsMatched && <GameOver handleClick={resetGame} />}
