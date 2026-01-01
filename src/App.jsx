@@ -8,6 +8,7 @@ import ErrorCard from './components/ErrorCard'
 export default function App() {
     const initialFormData = {category: "animals-and-nature", number: 10}
     
+    const [isFirstRender, setIsFirstRender] = useState(true)
     const [formData, setFormData] = useState(initialFormData)
     const [isGameOn, setIsGameOn] = useState(false)
     const [emojisData, setEmojisData] = useState([])
@@ -51,7 +52,9 @@ export default function App() {
         } catch(err) {
             console.error(err)
             setIsError(true)
-        }   
+        } finally {
+            setIsFirstRender(false)            
+        }
     }
 
     async function getDataSlice(data) {
@@ -116,7 +119,11 @@ export default function App() {
         <main>
             <h1>Memory</h1>
             {!isGameOn && !isError &&
-                <Form handleSubmit={startGame} handleChange={handleFormChange} />
+                <Form
+                    handleSubmit={startGame}
+                    handleChange={handleFormChange}
+                    isFirstRender={isFirstRender}
+                />
             }
             {isGameOn && !areAllCardsMatched &&
                 <AssistiveTechInfo emojisData={emojisData} matchedCards={matchedCards} />}
