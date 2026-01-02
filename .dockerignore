@@ -1,0 +1,7 @@
+# Node modules and dependencies
+node_modules
+bar
+
+# Git
+.git
+.gitignore
