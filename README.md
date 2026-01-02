@@ -21,8 +21,7 @@ Visit the [Memory Game on GitHub Pages](https://gmarav05.github.io/memory-game/)
 ## Video
 
 
-Uploading demo.mov…
-
+https://github.com/user-attachments/assets/7c382cc7-e78e-4132-a32f-d6064bec3b8a
 
 
 
