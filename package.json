@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "html-entities": "^2.6.0",
+    "nostr-components": "^0.3.2",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
   },

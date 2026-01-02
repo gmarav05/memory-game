@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import 'nostr-components';
 import Form from './components/Form'
 import MemoryCard from './components/MemoryCard'
 import AssistiveTechInfo from './components/AssistiveTechInfo'
@@ -137,6 +138,22 @@ export default function App() {
                 />
             }
             {isError && <ErrorCard handleClick={resetError} />}
+    <nostr-like style={{
+        width: '150px',
+        '--nostrc-like-btn-bg': 'linear-gradient(120deg, #d4fc79 0%, #96e6a1 30%, #84fab0 60%, #8fd3f4 100%)',
+        '--nostrc-like-btn-color': '#1b2a2f',
+        '--nostrc-like-btn-hover-bg': 'linear-gradient(120deg, #f4ffa8 0%, #c8f8d0 30%, #b8fdd0 60%, #b8e8ff 100%)',
+        '--nostrc-like-btn-text-primary': '#1b2a2f',
+        '--nostrc-like-btn-text-secondary': '#1b2a2f',
+        '--nostrc-like-btn-border': '1px solid rgba(27,42,47,0.25)',
+        '--nostrc-like-btn-hover-color': '#1b2a2f',
+        '--nostrc-like-btn-hover-border': '1px solid rgba(27,42,47,0.4)'
+    }}
+    url="https://github.com/gmarav005/memory-game" 
+    text="Like">
+    </nostr-like>
+
         </main>
+        
     )
 }
